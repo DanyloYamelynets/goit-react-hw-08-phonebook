@@ -1,77 +1,64 @@
-import ContactForm from './ContactForm/ContactForm';
-import Filter from './Filter/Filter';
-import ContactList from './Contacts/ContactList';
-import {
-  Container,
-  PhonebookTitle,
-  ContactsTitle,
-} from './Container/ContainerStyled';
-import { useDispatch, useSelector } from 'react-redux';
-import { setFilter } from 'redux/contactsSlice';
-import {
-  addContactThunk,
-  deleteContactThunk,
-  fetchContactsThunk,
-} from 'redux/operations';
-import { useEffect } from 'react';
+import { Suspense } from 'react';
 import Loader from './Loader/Loader';
-import {
-  selectContacts,
-  selectError,
-  selectFilter,
-  selectFilteredContacts,
-  selectIsLoading,
-} from 'redux/selectors';
+import { Link, Navigate, Route, Routes } from 'react-router-dom';
+import { lazy } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutThunk, refreshPageThunk } from 'redux/auth/userOperations';
+import { useEffect } from 'react';
+
+const Home = lazy(() => import('pages/Home'));
+const Login = lazy(() => import('pages/Login'));
+const Register = lazy(() => import('pages/Register'));
+const Contacts = lazy(() => import('pages/Contacts'));
 
 export default function App() {
-  const contacts = useSelector(selectContacts);
-  const filter = useSelector(selectFilter);
-  const isLoading = useSelector(selectIsLoading);
-  const error = useSelector(selectError);
-
   const dispatch = useDispatch();
+  const userData = useSelector(state => state.user.userData);
+  const token = useSelector(state => state.user.token);
 
   useEffect(() => {
-    dispatch(fetchContactsThunk());
-  }, [dispatch]);
+    if (!token) return;
 
-  const onAddContact = contactData => {
-    const { name } = contactData;
-    const checkName = contacts.some(
-      contact => contact.name.toLowerCase() === name.toLowerCase()
-    );
+    dispatch(refreshPageThunk());
+  }, [dispatch, token]);
 
-    if (checkName) {
-      alert(`${name} is already in contacts.`);
-    } else {
-      dispatch(addContactThunk(contactData));
-    }
+  const handleLogOut = () => {
+    dispatch(logoutThunk());
   };
-  const onFilter = filterContacts => {
-    dispatch(setFilter(filterContacts));
-  };
-  const onDeleteContact = contactId => {
-    dispatch(deleteContactThunk(contactId));
-  };
-
-  const filteredContacts = useSelector(selectFilteredContacts);
 
   return (
-    <Container>
-      <PhonebookTitle>Phonebook</PhonebookTitle>
-      <ContactForm onAddContact={onAddContact} />
-      <ContactsTitle>Contacts</ContactsTitle>
-      {isLoading && <Loader />}
-      {error && <div>Error: {error}</div>}
-      <Filter
-        filter={filter}
-        onFilter={onFilter}
-        title="Find contacts by name"
-      />
-      <ContactList
-        contacts={filteredContacts}
-        onDeleteContact={onDeleteContact}
-      />
-    </Container>
+    <div>
+      <header>
+        <nav>
+          <Link to="/">Home</Link>
+          {userData ? (
+            <>
+              <Link to="/contacts">Contacts</Link>
+              <div>
+                <p>{userData.email}</p>
+                <button onClick={handleLogOut}>Log Out</button>
+              </div>
+            </>
+          ) : (
+            <>
+              <Link to="/login">Log In</Link>
+              <Link to="/register">Register</Link>
+            </>
+          )}
+        </nav>
+      </header>
+      <main>
+        <Suspense fallback={<Loader />}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/contacts" element={<Contacts />} />
+
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Suspense>
+      </main>
+    </div>
   );
 }
