@@ -1,20 +1,23 @@
 import { Suspense } from 'react';
 import Loader from './Loader/Loader';
-import { Link, Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { lazy } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { logoutThunk, refreshPageThunk } from 'redux/auth/userOperations';
+import { refreshPageThunk } from 'redux/auth/userOperations';
 import { useEffect } from 'react';
+import { UserMenu } from './UserMenu/UserMenu';
+import { selectToken, selectUserData } from 'redux/auth/userSelectors';
+import { Container, Nav, SideNav, SlyledLink } from './AppStyled';
 
-const Home = lazy(() => import('pages/Home'));
-const Login = lazy(() => import('pages/Login'));
-const Register = lazy(() => import('pages/Register'));
+const Home = lazy(() => import('pages/Home/Home'));
+const Login = lazy(() => import('pages/Login/Login'));
+const Register = lazy(() => import('pages/Register/Register'));
 const Contacts = lazy(() => import('pages/Contacts'));
 
 export default function App() {
   const dispatch = useDispatch();
-  const userData = useSelector(state => state.user.userData);
-  const token = useSelector(state => state.user.token);
+  const userData = useSelector(selectUserData);
+  const token = useSelector(selectToken);
 
   useEffect(() => {
     if (!token) return;
@@ -22,31 +25,24 @@ export default function App() {
     dispatch(refreshPageThunk());
   }, [dispatch, token]);
 
-  const handleLogOut = () => {
-    dispatch(logoutThunk());
-  };
-
   return (
     <div>
-      <header>
-        <nav>
-          <Link to="/">Home</Link>
+      <SideNav>
+        <Nav>
+          <SlyledLink to="/">Home</SlyledLink>
           {userData ? (
             <>
-              <Link to="/contacts">Contacts</Link>
-              <div>
-                <p>{userData.email}</p>
-                <button onClick={handleLogOut}>Log Out</button>
-              </div>
+              <SlyledLink to="/contacts">Contacts</SlyledLink>
             </>
           ) : (
             <>
-              <Link to="/login">Log In</Link>
-              <Link to="/register">Register</Link>
+              <SlyledLink to="/login">Log In</SlyledLink>
+              <SlyledLink to="/register">Register</SlyledLink>
             </>
           )}
-        </nav>
-      </header>
+        </Nav>
+        <Container>{userData ? <UserMenu /> : null}</Container>
+      </SideNav>
       <main>
         <Suspense fallback={<Loader />}>
           <Routes>
