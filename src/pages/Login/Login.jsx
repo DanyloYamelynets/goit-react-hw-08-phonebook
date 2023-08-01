@@ -22,7 +22,7 @@ const Login = () => {
     const children = e.currentTarget.elements;
     const email = children.userEmail.value;
     const password = children.userPassword.value;
-    dispatch(loginThunk({ email, password }));
+    dispatch(loginThunk({ email, password }))
     e.currentTarget.reset();
   };
 

@@ -4,7 +4,6 @@ export const Container = styled.div`
   position: absolute;
   top: 200px;
   left: 400px;
-
   height: auto;
   justify-content: center;
   align-items: center;
@@ -22,9 +21,7 @@ export const RegisterForm = styled.form`
   justify-content: center;
   width: 400px;
   padding: 20px;
-
   background: #ffffff;
-
   border-radius: 8px;
 `;
 export const RegisterLabel = styled.label`
@@ -50,7 +47,7 @@ export const RegisterInput = styled.input`
   transition: 250ms;
   &:hover,
   &:focus {
-    border: 1px solid #324a98;
+    border: 1px solid #2b48a4;
     transition: 250ms;
   }
   &::placeholder {
@@ -64,19 +61,15 @@ export const RegisterButton = styled.button`
   padding: 11px 0px;
   margin-top: 10px;
   max-width: 400px;
-
   background: #006d97;
   border-radius: 6px;
   border: none;
-
   font-weight: 400;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 18px;
   letter-spacing: 0.16px;
-
   color: #ffffff;
   transition: 250ms;
-
   &:hover,
   &:focus {
     background: #004966;

@@ -11,7 +11,7 @@ import {
 
 const INITIAL_STATE = {
   name: '',
-  phone: '',
+  number: '',
 };
 
 export default function ContactForm({ onAddContact }) {
@@ -28,7 +28,7 @@ export default function ContactForm({ onAddContact }) {
 
     const contactData = {
       name: formData.name,
-      phone: formData.phone,
+      number: formData.number,
     };
     onAddContact(contactData);
     setFormData(INITIAL_STATE);
@@ -51,10 +51,10 @@ export default function ContactForm({ onAddContact }) {
       <ContactsLabel>
         <ContactNumber>Number</ContactNumber>
         <ContactInput
-          value={formData.phone}
+          value={formData.number}
           onChange={onInputChange}
           type="tel"
-          name="phone"
+          name="number"
           pattern="\\+?\\d{1,4}?[-\\.\\s]?\\(\\d{1,3}\\)?[-\\.\\s]?\\d{1,4}[-\\.\\s]?\\d{1,4}[-\\.\\s]?\\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required

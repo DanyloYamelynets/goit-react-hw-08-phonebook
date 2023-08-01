@@ -9,11 +9,11 @@ import {
 const ContactList = ({ contacts, onDeleteContact }) => {
   return (
     <ContactsList>
-      {contacts.map(({ id, phone, name }) => {
+      {contacts.map(({ id, number, name }) => {
         return (
           <ContactsItems key={id}>
             <ContactInfo>
-              {name}: {phone}
+              {name}: {number}
             </ContactInfo>
             <DeleteBtn
               type="button"
@@ -35,7 +35,7 @@ ContactList.propTypes = {
     PropTypes.shape({
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
-      phone: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
     }).isRequired
   ),
   onDeleteContact: PropTypes.func.isRequired,

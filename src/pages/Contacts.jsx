@@ -1,5 +1,7 @@
+import { useEffect } from 'react';
 import ContactForm from 'components/ContactForm/ContactForm';
 import Filter from 'components/Filter/Filter';
+import Loader from 'components/Loader/Loader';
 import ContactList from 'components/Contacts/ContactList';
 import {
   Container,
@@ -7,8 +9,6 @@ import {
   ContactsTitle,
 } from 'components/Container/ContainerStyled';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import Loader from 'components/Loader/Loader';
 import {
   addContactThunk,
   deleteContactThunk,
@@ -22,8 +22,8 @@ import {
   selectFilteredContacts,
   selectIsLoading,
 } from 'redux/contacts/contactsSelectors';
-import withAuthRedirect from 'HOC/withAuthRedirect';
 import { selectUserData } from 'redux/auth/userSelectors';
+import withAuthRedirect from 'HOC/withAuthRedirect';
 
 const Contacts = () => {
   const userData = useSelector(selectUserData);

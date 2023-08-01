@@ -9,7 +9,7 @@ export const Text = styled.p`
 margin: 0;
 `
 export const LogOutBtn = styled.button`
-  margin-left: 10px;
+  margin-left: 18px;
   max-width: 150px;
   padding: 5px 10px;
   cursor: pointer;

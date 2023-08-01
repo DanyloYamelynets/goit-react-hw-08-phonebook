@@ -47,7 +47,7 @@ export const LoginInput = styled.input`
   transition: 250ms;
   &:hover,
   &:focus {
-    border: 1px solid #324a98;
+    border: 1px solid #2b48a4;
     transition: 250ms;
   }
   &::placeholder {
@@ -64,8 +64,8 @@ export const LoginButton = styled.button`
   background: #006d97;
   border-radius: 6px;
   border: none;
-  font-weight: 400;
-  font-size: 14px;
+  font-weight: 500;
+  font-size: 15px;
   line-height: 18px;
   letter-spacing: 0.16px;
   color: #ffffff;

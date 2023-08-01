@@ -12,7 +12,7 @@ const Loader = () => {
       wrapperStyle={{
         position: 'absolute',
         top: '65%',
-        left: '50%',
+        left: '42%',
         transform: 'translate(-50%, -50%)',
         display: 'flex',
         justifyContent: 'center',
