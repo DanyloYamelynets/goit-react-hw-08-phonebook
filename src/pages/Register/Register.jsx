@@ -1,14 +1,23 @@
 import React from 'react';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { registerThunk } from 'redux/auth/userOperations';
-import { Container, RegisterButton, RegisterForm, RegisterInput, RegisterLabel, RegisterP, RegisterTitle } from './RegisterStyled';
+import { selectUserData } from 'redux/auth/userSelectors';
+import {
+  Container,
+  RegisterButton,
+  RegisterForm,
+  RegisterInput,
+  RegisterLabel,
+  RegisterP,
+  RegisterTitle,
+} from './RegisterStyled';
 
 const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userData = useSelector(state => state.user.userData);
+  const userData = useSelector(selectUserData);
 
   useEffect(() => {
     if (!userData) return;

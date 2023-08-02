@@ -1,12 +1,12 @@
 import { Suspense } from 'react';
-import Loader from './Loader/Loader';
-import { Navigate, Route, Routes } from 'react-router-dom';
 import { lazy } from 'react';
+import { useEffect } from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { refreshPageThunk } from 'redux/auth/userOperations';
-import { useEffect } from 'react';
-import { UserMenu } from './UserMenu/UserMenu';
 import { selectToken, selectUserData } from 'redux/auth/userSelectors';
+import Loader from './Loader/Loader';
+import { UserMenu } from './UserMenu/UserMenu';
 import { Container, Nav, SideNav, SlyledLink } from './AppStyled';
 
 const Home = lazy(() => import('pages/Home/Home'));

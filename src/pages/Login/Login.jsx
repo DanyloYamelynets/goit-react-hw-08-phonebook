@@ -1,28 +1,36 @@
 import React from 'react';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginThunk } from 'redux/auth/userOperations';
-import { Container, LoginButton, LoginForm, LoginInput, LoginLabel, LoginP, LoginTitle } from './LoginStyled';
-
+import { selectUserData } from 'redux/auth/userSelectors';
+import {
+  Container,
+  LoginButton,
+  LoginForm,
+  LoginInput,
+  LoginLabel,
+  LoginP,
+  LoginTitle,
+} from './LoginStyled';
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userData = useSelector(state => state.user.userData);
+  const userData = useSelector(selectUserData);
 
   useEffect(() => {
     if (!userData) return;
 
     navigate('/contacts', { replace: true });
-  }, [userData, navigate]);
+  }, [userData, navigate, dispatch]);
 
   const handleSubmit = e => {
     e.preventDefault();
     const children = e.currentTarget.elements;
     const email = children.userEmail.value;
     const password = children.userPassword.value;
-    dispatch(loginThunk({ email, password }))
+    dispatch(loginThunk({ email, password }));
     e.currentTarget.reset();
   };
 

@@ -36,7 +36,6 @@ export const currentUserRequest = async () => {
 };
 
 // ==================CONTACTS==================
-
 export const getAllContacts = async () => {
   const { data } = await instance.get('/contacts');
   return data;

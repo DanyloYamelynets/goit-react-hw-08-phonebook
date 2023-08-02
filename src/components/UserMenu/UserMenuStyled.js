@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-display: flex;
-justify-content: center;
-align-items: center;
-`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 export const Text = styled.p`
-margin: 0;
-`
+  margin: 0;
+`;
 export const LogOutBtn = styled.button`
   margin-left: 18px;
   max-width: 150px;
